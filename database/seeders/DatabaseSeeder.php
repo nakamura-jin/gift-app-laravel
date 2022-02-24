@@ -13,6 +13,9 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // \App\Models\User::factory(10)->create();
+        $this->call(TypeSeeder::class);
+        \App\Models\User::factory(10)->create();
+        \App\Models\Owner::factory(10)->create();
+        \App\Models\Admin::factory(10)->create();
     }
 }

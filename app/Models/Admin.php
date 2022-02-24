@@ -10,7 +10,7 @@ use Laravel\Sanctum\HasApiTokens;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 use App\Models\Type;
 
-class User extends Authenticatable implements JWTSubject
+class Admin extends Authenticatable implements JWTSubject
 {
     use HasApiTokens, HasFactory, Notifiable;
 
@@ -23,7 +23,6 @@ class User extends Authenticatable implements JWTSubject
         'name',
         'email',
         'password',
-        'type_id'
     ];
 
     /**
@@ -33,14 +32,6 @@ class User extends Authenticatable implements JWTSubject
      */
     protected $hidden = [
         'password',
-        'verify_email',
-        'verify_token',
-        'verify_date',
-        'verify_email_address',
-    ];
-
-    protected $casts = [
-        'email_verified_at' => 'datetime',
     ];
 
     public function getJWTIdentifier()
@@ -53,7 +44,7 @@ class User extends Authenticatable implements JWTSubject
         return [];
     }
 
-    public function type()
+    public function types()
     {
         return $this->hasOne(Type::class);
     }
