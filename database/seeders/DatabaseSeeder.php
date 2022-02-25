@@ -14,9 +14,11 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         $this->call(TypeSeeder::class);
+        $this->call(GenreSeeder::class);
         \App\Models\User::factory(10)->create();
         \App\Models\Owner::factory(10)->create();
         \App\Models\Admin::factory(10)->create();
-        \App\Models\Genre::factory(5)->create();
+        \App\Models\Menu::factory(10)->create();
+
     }
 }

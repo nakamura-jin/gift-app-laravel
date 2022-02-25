@@ -9,6 +9,7 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 use App\Models\Type;
+use App\Models\Menu;
 
 class Owner extends Authenticatable implements JWTSubject
 {
@@ -56,5 +57,10 @@ class Owner extends Authenticatable implements JWTSubject
     public function type()
     {
         return $this->hasOne(Type::class);
+    }
+
+    public function menus()
+    {
+        return $this->belongsTo(Menu::class);
     }
 }
