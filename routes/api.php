@@ -37,3 +37,7 @@ Route::get('menu/{id}', [MenuController::class, 'show']);
 Route::put('menu/{id}', [MenuController::class, 'update']);
 Route::delete('menu/{id}', [MenuController::class, 'destroy']);
 Route::put('menu/{owner_id}/update_stock', [MenuController::class, 'recievedStock']);
+
+//owner
+Route::get('owner', [OwnerController::class, 'index']);
+Route::get('owner/menu/{owner_id}', [MenuController::class, 'myMenu']);
