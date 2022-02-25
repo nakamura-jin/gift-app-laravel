@@ -67,7 +67,7 @@ class UserController extends Controller
 
         // トークンの有効期限を30分とするため有効な時間を算出
         // 現在時間 -30分
-        $verify_limit = Carbon::now()->subMinute(1)->toDateTimeString();
+        $verify_limit = Carbon::now()->subMinute(30)->toDateTimeString();
 
         $user = User::where('verify_token', $token)->where('verify_date', '>', $verify_limit)->first();
 
