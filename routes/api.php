@@ -7,6 +7,8 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\MenuController;
 use App\Http\Controllers\PurchaseController;
 use App\Http\Controllers\CheckoutController;
+use App\Http\Controllers\GiftController;
+use App\Http\Controllers\MailController;
 
 /*
 |--------------------------------------------------------------------------
@@ -46,3 +48,10 @@ Route::get('owner/menu/{owner_id}', [MenuController::class, 'myMenu']);
 
 Route::post('purchase', [PurchaseController::class, 'store']);
 Route::get('checkout/{user_id}/{menu_id}/{quantity}', [CheckoutController::class, 'checkout']);
+
+//gift
+Route::post('gift', [GiftController::class, 'store']);
+Route::get('gift/{url}', [GiftController::class, 'show']);
+
+//mail(create gift)
+Route::post('send', [MailController::class, 'send']);
