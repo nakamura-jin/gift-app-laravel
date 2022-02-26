@@ -21,3 +21,4 @@ Route::get('/', function () {
 
 Route::get('/verify/{token}', [UserController::class, 'verify']);
 Route::get('/resend/{token}', [UserController::class, 'resend']);
+Route::get('/reminder/{token}', [UserController::class, 'reminder']);

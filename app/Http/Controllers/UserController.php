@@ -10,7 +10,8 @@ use Illuminate\Support\Str;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\RegisterMail;
-use Illuminate\Support\Facades\Log;
+use App\Mail\ChangePasswordMail;
+
 
 
 
@@ -128,4 +129,96 @@ class UserController extends Controller
         Mail::to($user->verify_email_address)->send(new RegisterMail($data));
         return view('resend');
     }
+
+    public function changePassword(Request $request)
+    {
+        $user = User::where('email', $request->email)->first();
+
+        if (!$user) {
+            return response()->json(['message' => 'ユーザーが存在しません']);
+        } else {
+
+            $user->verify_token = Hash::make($request->password);
+            $user->verify_date = Carbon::now()->toDateTimeString();
+            $user->save();
+
+            $token = base64_encode($user->verify_token);
+
+            Mail::to($request->email)->send(new ChangePasswordMail($token));
+        }
+        return response()->json(['token' => $token]);
+    }
+
+    public function reminder($token)
+    {
+        $params['result'] = "error";
+
+
+        // トークンの有効期限を30分とするため有効な時間を算出
+        // 現在時間 -30分
+        $verify_limit = Carbon::now()->subMinute(30)->toDateTimeString();
+        // tokenが一致するか
+        $user = User::where('verify_token', base64_decode($token))->where('verify_date', '>', $verify_limit)->first();
+
+        if ($user) {
+            $user->password = base64_decode($token);
+            $user->verify_token = null;
+            $user->verify_date = null;
+            $user->save();
+
+            $params = ['result' => 'success'];
+        }
+
+        return view('reminder', $params);
+    }
+
+    // public function password_change(Request $request)
+    // {
+
+    //     $params['result'] = "error";
+
+    //     // 入力情報のバリデーション
+    //     $validator = Validator::make($request->all(), [
+    //         'password' => 'required|string|min:8|confirmed',
+    //         'token' => 'required',
+    //     ]);
+
+    //     $token = $request->token;
+
+    //     // バリデーションエラーの場合レスポンス
+    //     if ($validator->fails()) {
+    //         $params['message'] = $validator->errors();
+    //         Log::info('Reminder Error: ' . $validator->errors());
+    //         return redirect('/reminder/' . $token)
+    //             ->withErrors($validator)
+    //             ->withInput();
+    //     } else {
+
+    //         // トークンの有効期限を30分とするため有効な時間を算出
+    //         // 現在時間 -30分
+    //         $verify_limit = Carbon::now()->subMinute(30)->toDateTimeString();
+    //         // tokenが一致するか
+    //         $user = User::where('verify_token', $token)->where('verify_date', '>', $verify_limit)->first();
+
+    //         if ($user) {
+
+    //             // パスワードを変更する
+    //             $user->password = bcrypt($request->password);
+    //             // その他クリーニング
+    //             $user->verify_token = null;
+    //             $user->verify_date = null;
+    //             // 承認日登録
+    //             $user->email_verified_at = Carbon::now()->toDateTimeString();
+
+    //             // テーブル保存
+    //             $user->save();
+    //             Log::info('Reminder Success: ' . $user);
+    //             $params = ['result' => 'success'];
+    //         } else {
+    //             Log::info('Reminder Error: Notfound User');
+    //             $params = ['result' => 'error'];
+    //         }
+    //     }
+    //     return view('reminder', $params);
+    // }
 }

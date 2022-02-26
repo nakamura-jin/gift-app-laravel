@@ -32,6 +32,8 @@ Route::post('login', [AuthController::class, 'login']);
 Route::post('logout', [AuthController::class, 'logout']);
 Route::get('me', [AuthController::class, 'me']);
 Route::get('all_user', [UserController::class, 'index']);
+Route::post('change_password', [UserController::class, 'changePassword']);
+Route::post('reminder', [UserController::class, 'reminder']);
 
 //Genre
 Route::get('genre', [MenuController::class, 'genre']);
