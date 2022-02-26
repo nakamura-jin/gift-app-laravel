@@ -5,6 +5,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\MenuController;
+use App\Http\Controllers\PurchaseController;
+use App\Http\Controllers\CheckoutController;
 
 /*
 |--------------------------------------------------------------------------
@@ -41,3 +43,6 @@ Route::put('menu/{owner_id}/update_stock', [MenuController::class, 'recievedStoc
 //owner
 Route::get('owner', [OwnerController::class, 'index']);
 Route::get('owner/menu/{owner_id}', [MenuController::class, 'myMenu']);
+
+Route::post('purchase', [PurchaseController::class, 'store']);
+Route::get('checkout/{user_id}/{menu_id}/{quantity}', [CheckoutController::class, 'checkout']);

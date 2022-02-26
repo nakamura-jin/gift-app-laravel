@@ -71,9 +71,7 @@ class MenuController extends Controller
         $item = Menu::all();
         $menu = $item->pluck('id')->last() + 1;
 
-        if ($genre->id == 1) {
-            $product_code = 1;
-        }
+        $product_code = $genre->id;
 
         $menu_id = str_pad($menu, 4, '0', STR_PAD_LEFT);
 
@@ -88,9 +86,6 @@ class MenuController extends Controller
     public function show($menu)
     {
         $item = Menu::find($menu);
-
-        $area = Area::find($item->area_id);
-        $item->area_name = $area->name;
 
         $genre = Genre::find($item->genre_id);
         $item->genre_name = $genre->name;
