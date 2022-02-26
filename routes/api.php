@@ -47,6 +47,7 @@ Route::put('menu/{owner_id}/update_stock', [MenuController::class, 'recievedStoc
 
 //owner
 Route::get('owner', [OwnerController::class, 'index']);
+Route::post('owner/register', [OwnerController::class, 'store']);
 Route::get('owner/menu/{owner_id}', [MenuController::class, 'myMenu']);
 
 Route::post('purchase', [PurchaseController::class, 'store']);

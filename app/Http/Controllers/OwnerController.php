@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Http\Requests\RegisterRequest;
 use App\Models\Owner;
 use Illuminate\Support\Facades\Hash;
 
@@ -15,7 +16,7 @@ class OwnerController extends Controller
         return response()->json(['data' => $items]);
     }
 
-    public function store(UserRequest $request)
+    public function store(RegisterRequest $request)
     {
         $input = $request->validated();
 
@@ -23,6 +24,7 @@ class OwnerController extends Controller
             'name' => $input['name'],
             'email' => $input['email'],
             'password' => Hash::make($input['password']),
+            'type_id' => 2
         ]);
 
         return response()->json(['data' => $item], 200);
