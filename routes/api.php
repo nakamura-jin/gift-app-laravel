@@ -9,6 +9,7 @@ use App\Http\Controllers\PurchaseController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\GiftController;
 use App\Http\Controllers\MailController;
+use App\Http\Controllers\NewsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -55,3 +56,7 @@ Route::get('gift/{url}', [GiftController::class, 'show']);
 
 //mail(create gift)
 Route::post('send', [MailController::class, 'send']);
+
+//news
+Route::get('news', [NewsController::class, 'index']);
+Route::post('create/news', [NewsController::class, 'store']);
