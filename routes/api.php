@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\OwnerController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\MenuController;
 use App\Http\Controllers\PurchaseController;
@@ -30,6 +31,7 @@ Route::post('register', [UserController::class, 'store']);
 Route::post('login', [AuthController::class, 'login']);
 Route::post('logout', [AuthController::class, 'logout']);
 Route::get('me', [AuthController::class, 'me']);
+Route::get('all_user', [UserController::class, 'index']);
 
 //Genre
 Route::get('genre', [MenuController::class, 'genre']);
@@ -56,6 +58,7 @@ Route::get('gift/{url}', [GiftController::class, 'show']);
 
 //mail(create gift)
 Route::post('send', [MailController::class, 'send']);
+Route::post('admin/send', [MailController::class, 'admin_send']);
 
 //news
 Route::get('news', [NewsController::class, 'index']);

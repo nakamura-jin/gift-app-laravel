@@ -16,6 +16,13 @@ use Illuminate\Support\Facades\Log;
 
 class UserController extends Controller
 {
+    public function index()
+    {
+        $items = User::all();
+
+        return response()->json(array('data' => $items));
+    }
+
     public function store(RegisterRequest $request)
     {
         // バリデーション

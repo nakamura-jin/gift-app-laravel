@@ -16,16 +16,16 @@ class MailController extends Controller
         Mail::to('pgm_eng@yahoo.co.jp')->send(new PurchaseMail($url));
     }
 
-    // public function admin_send(MailRequest $request)
-    // {
-    //     $input = $request->validated();
+    public function admin_send(MailRequest $request)
+    {
+        $input = $request->validated();
 
-    //     $sendData = [
-    //         'name' => $input['name'],
-    //         'title' => $input['title'],
-    //         'text' => $input['text']
-    //     ];
+        $sendData = [
+            'name' => $input['name'],
+            'title' => $input['title'],
+            'text' => $input['text']
+        ];
 
-    //     Mail::to($input['email'])->send(new AdminSendMail($sendData));
-    // }
+        Mail::to($input['email'])->send(new AdminSendMail($sendData));
+    }
 }
